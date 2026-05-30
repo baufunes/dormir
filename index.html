@@ -255,6 +255,11 @@
                         document.getElementById('horaDespertar').addEventListener('keypress', function (e) {
                                     if (e.key === 'Enter') calcularDormir();
                         });
+
+                        // Registrar Service Worker para PWA
+                        if ('serviceWorker' in navigator) {
+                                    navigator.serviceWorker.register('sw.js');
+                        }
             </script>
 </body>
 
