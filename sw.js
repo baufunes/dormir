@@ -1,21 +1,21 @@
 const CACHE_NAME = 'calculador-sueno-v1';
 const urlsToCache = [
-            '/',
-            '/index.html',
-            '/manifest.json'
+    '/dormir/',
+    '/dormir/index.html',
+    '/dormir/manifest.json'
 ];
 
 self.addEventListener('install', event => {
-            event.waitUntil(
-                        caches.open(CACHE_NAME)
-                                    .then(cache => cache.addAll(urlsToCache))
-            );
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(urlsToCache))
+    );
 });
 
 self.addEventListener('fetch', event => {
-            event.respondWith(
-                        caches.match(event.request)
-                                    .then(response => response || fetch(event.request))
-                                    .catch(() => caches.match('/index.html'))
-            );
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => response || fetch(event.request))
+            .catch(() => caches.match('/dormir/index.html'))
+    );
 });
