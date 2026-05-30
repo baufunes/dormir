@@ -2,265 +2,263 @@
 <html lang="es">
 
 <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Calculador de Sueño</title>
-            <link rel="manifest" href="manifest.json">
-            <meta name="theme-color" content="#2196F3">
-            <style>
-                        * {
-                                    margin: 0;
-                                    padding: 0;
-                                    box-sizing: border-box;
-                        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculador de Sueño</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196F3">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-                        body {
-                                    font-family: Arial, sans-serif;
-                                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                                    min-height: 100vh;
-                                    display: flex;
-                                    justify-content: center;
-                                    align-items: center;
-                                    padding: 20px;
-                        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-                        .container {
-                                    background: white;
-                                    border-radius: 15px;
-                                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                                    padding: 30px;
-                                    width: 100%;
-                                    max-width: 400px;
-                        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+        }
 
-                        h1 {
-                                    text-align: center;
-                                    color: #333;
-                                    margin-bottom: 30px;
-                                    font-size: 28px;
-                        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
 
-                        h2 {
-                                    text-align: center;
-                                    color: #555;
-                                    margin: 30px 0 20px 0;
-                                    font-size: 20px;
-                                    border-top: 2px solid #eee;
-                                    padding-top: 20px;
-                        }
+        h2 {
+            text-align: center;
+            color: #555;
+            margin: 30px 0 20px 0;
+            font-size: 20px;
+            border-top: 2px solid #eee;
+            padding-top: 20px;
+        }
 
-                        .form-group {
-                                    margin-bottom: 20px;
-                        }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-                        label {
-                                    display: block;
-                                    margin-bottom: 8px;
-                                    color: #555;
-                                    font-weight: bold;
-                        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
 
-                        input,
-                        select {
-                                    width: 100%;
-                                    padding: 12px;
-                                    border: 2px solid #ddd;
-                                    border-radius: 8px;
-                                    font-size: 16px;
-                                    transition: border-color 0.3s;
-                        }
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
 
-                        input:focus,
-                        select:focus {
-                                    outline: none;
-                                    border-color: #667eea;
-                        }
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
 
-                        button {
-                                    width: 100%;
-                                    padding: 14px;
-                                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                                    color: white;
-                                    border: none;
-                                    border-radius: 8px;
-                                    font-size: 16px;
-                                    font-weight: bold;
-                                    cursor: pointer;
-                                    transition: transform 0.2s;
-                                    margin-bottom: 10px;
-                        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-bottom: 10px;
+        }
 
-                        button:active {
-                                    transform: scale(0.98);
-                        }
+        button:active {
+            transform: scale(0.98);
+        }
 
-                        .result {
-                                    margin-top: 15px;
-                                    padding: 15px;
-                                    border-radius: 8px;
-                                    text-align: center;
-                                    font-size: 16px;
-                                    font-weight: bold;
-                                    display: none;
-                        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            display: none;
+        }
 
-                        .result.success {
-                                    background: #e8f5e9;
-                                    color: #2e7d32;
-                                    display: block;
-                        }
+        .result.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: block;
+        }
 
-                        .result.error {
-                                    background: #ffebee;
-                                    color: #c62828;
-                                    display: block;
-                        }
+        .result.error {
+            background: #ffebee;
+            color: #c62828;
+            display: block;
+        }
 
-                        .result.warning {
-                                    background: #fff3e0;
-                                    color: #e65100;
-                                    display: block;
-                        }
+        .result.warning {
+            background: #fff3e0;
+            color: #e65100;
+            display: block;
+        }
 
-                        @media (max-width: 480px) {
-                                    .container {
-                                                padding: 20px;
-                                    }
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
 
-                                    h1 {
-                                                font-size: 24px;
-                                    }
-                        }
-            </style>
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-            <div class="container">
-                        <h1>Calculador de Sueño</h1>
+    <div class="container">
+        <h1>Calculador de Sueño</h1>
 
-                        <!-- SECCIÓN 1: ¿A qué hora duermo? -->
-                        <div>
-                                    <h2>¿A qué hora te acuestas?</h2>
+        <!-- SECCIÓN 1: ¿A qué hora duermo? -->
+        <div>
+            <h2>¿A qué hora te acuestas?</h2>
 
-                                    <div class="form-group">
-                                                <label for="dormir">¿Ya te acostas? (sí/no):</label>
-                                                <select id="dormir">
-                                                            <option value="">Selecciona...</option>
-                                                            <option value="si">Sí</option>
-                                                            <option value="no">No</option>
-                                                </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                                <label for="hora">¿Qué hora es? (0-23):</label>
-                                                <input type="number" id="hora" min="0" max="23" placeholder="Ej: 23">
-                                    </div>
-
-                                    <button onclick="calcularDespertar()">Calcular hora de despertar</button>
-                                    <div id="resultado1" class="result"></div>
-                        </div>
-
-                        <!-- SECCIÓN 2: ¿A qué hora me despierto? -->
-                        <div>
-                                    <h2>¿A qué hora te queres despertar?</h2>
-
-                                    <div class="form-group">
-                                                <label for="horaDespertar">¿A qué hora te queres despertar?
-                                                            (0-23):</label>
-                                                <input type="number" id="horaDespertar" min="0" max="23"
-                                                            placeholder="Ej: 7">
-                                    </div>
-
-                                    <button onclick="calcularDormir()">Calcular hora para dormir</button>
-                                    <div id="resultado2" class="result"></div>
-                        </div>
+            <div class="form-group">
+                <label for="dormir">¿Ya te acostas? (sí/no):</label>
+                <select id="dormir">
+                    <option value="">Selecciona...</option>
+                    <option value="si">Sí</option>
+                    <option value="no">No</option>
+                </select>
             </div>
 
-            <script>
-                        // Calcular hora de despertar
-                        function calcularDespertar() {
-                                    const dormir = document.getElementById('dormir').value.toLowerCase();
-                                    const hora = document.getElementById('hora').value;
-                                    const resultado = document.getElementById('resultado1');
+            <div class="form-group">
+                <label for="hora">¿Qué hora es? (0-23):</label>
+                <input type="number" id="hora" min="0" max="23" placeholder="Ej: 23">
+            </div>
 
-                                    resultado.className = 'result';
+            <button onclick="calcularDespertar()">Calcular hora de despertar</button>
+            <div id="resultado1" class="result"></div>
+        </div>
 
-                                    if (dormir === 'si') {
-                                                try {
-                                                            const hr_dormir = parseInt(hora);
+        <!-- SECCIÓN 2: ¿A qué hora me despierto? -->
+        <div>
+            <h2>¿A qué hora te queres despertar?</h2>
 
-                                                            if (isNaN(hr_dormir) || hr_dormir < 0 || hr_dormir > 23) {
-                                                                        resultado.textContent = 'Ingresa una hora válida (0-23)';
-                                                                        resultado.className = 'result error';
-                                                                        return;
-                                                            }
+            <div class="form-group">
+                <label for="horaDespertar">¿A qué hora te queres despertar? (0-23):</label>
+                <input type="number" id="horaDespertar" min="0" max="23" placeholder="Ej: 7">
+            </div>
 
-                                                            let hr_despertar = hr_dormir + 8;
+            <button onclick="calcularDormir()">Calcular hora para dormir</button>
+            <div id="resultado2" class="result"></div>
+        </div>
+    </div>
 
-                                                            if (hr_despertar > 23) {
-                                                                        hr_despertar = hr_despertar - 24;
-                                                            }
+    <script>
+        // Calcular hora de despertar
+        function calcularDespertar() {
+            const dormir = document.getElementById('dormir').value.toLowerCase();
+            const hora = document.getElementById('hora').value;
+            const resultado = document.getElementById('resultado1');
 
-                                                            resultado.textContent = `Te tenés que despertar a las ${hr_despertar}:00`;
-                                                            resultado.className = 'result success';
-                                                } catch (error) {
-                                                            resultado.textContent = 'Error al procesar';
-                                                            resultado.className = 'result error';
-                                                }
-                                    } else if (dormir === 'no') {
-                                                resultado.textContent = '¿Y entonces para qué abrís la app?';
-                                                resultado.className = 'result warning';
-                                    } else {
-                                                resultado.textContent = 'Selecciona una opción';
-                                                resultado.className = 'result error';
-                                    }
-                        }
+            resultado.className = 'result';
 
-                        // Calcular hora de dormir (NUEVO)
-                        function calcularDormir() {
-                                    const horaDespertar = document.getElementById('horaDespertar').value;
-                                    const resultado = document.getElementById('resultado2');
+            if (dormir === 'si') {
+                try {
+                    const hr_dormir = parseInt(hora);
 
-                                    resultado.className = 'result';
+                    if (isNaN(hr_dormir) || hr_dormir < 0 || hr_dormir > 23) {
+                        resultado.textContent = 'Ingresa una hora válida (0-23)';
+                        resultado.className = 'result error';
+                        return;
+                    }
 
-                                    try {
-                                                const hr_despertar = parseInt(horaDespertar);
+                    let hr_despertar = hr_dormir + 8;
 
-                                                if (isNaN(hr_despertar) || hr_despertar < 0 || hr_despertar > 23) {
-                                                            resultado.textContent = 'Ingresa una hora válida (0-23)';
-                                                            resultado.className = 'result error';
-                                                            return;
-                                                }
+                    if (hr_despertar > 23) {
+                        hr_despertar = hr_despertar - 24;
+                    }
 
-                                                let hr_dormir = hr_despertar - 8;
+                    resultado.textContent = `Te tenés que despertar a las ${hr_despertar}:00`;
+                    resultado.className = 'result success';
+                } catch (error) {
+                    resultado.textContent = 'Error al procesar';
+                    resultado.className = 'result error';
+                }
+            } else if (dormir === 'no') {
+                resultado.textContent = '¿Y entonces para qué abrís la app?';
+                resultado.className = 'result warning';
+            } else {
+                resultado.textContent = 'Selecciona una opción';
+                resultado.className = 'result error';
+            }
+        }
 
-                                                // Si queda negativo, sumar 24
-                                                if (hr_dormir < 0) {
-                                                            hr_dormir = hr_dormir + 24;
-                                                }
+        // Calcular hora de dormir (NUEVO)
+        function calcularDormir() {
+            const horaDespertar = document.getElementById('horaDespertar').value;
+            const resultado = document.getElementById('resultado2');
 
-                                                resultado.textContent = `Deberías dormir a las ${hr_dormir}:00`;
-                                                resultado.className = 'result success';
-                                    } catch (error) {
-                                                resultado.textContent = 'Error al procesar';
-                                                resultado.className = 'result error';
-                                    }
-                        }
+            resultado.className = 'result';
 
-                        // Permitir calcular con Enter
-                        document.getElementById('hora').addEventListener('keypress', function (e) {
-                                    if (e.key === 'Enter') calcularDespertar();
-                        });
+            try {
+                const hr_despertar = parseInt(horaDespertar);
 
-                        document.getElementById('horaDespertar').addEventListener('keypress', function (e) {
-                                    if (e.key === 'Enter') calcularDormir();
-                        });
+                if (isNaN(hr_despertar) || hr_despertar < 0 || hr_despertar > 23) {
+                    resultado.textContent = 'Ingresa una hora válida (0-23)';
+                    resultado.className = 'result error';
+                    return;
+                }
 
-                        // Registrar Service Worker para PWA
-                        if ('serviceWorker' in navigator) {
-                                    navigator.serviceWorker.register('sw.js');
-                        }
-            </script>
+                let hr_dormir = hr_despertar - 8;
+
+                // Si queda negativo, sumar 24
+                if (hr_dormir < 0) {
+                    hr_dormir = hr_dormir + 24;
+                }
+
+                resultado.textContent = `Deberías dormir a las ${hr_dormir}:00`;
+                resultado.className = 'result success';
+            } catch (error) {
+                resultado.textContent = 'Error al procesar';
+                resultado.className = 'result error';
+            }
+        }
+
+        // Permitir calcular con Enter
+        document.getElementById('hora').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') calcularDespertar();
+        });
+
+        document.getElementById('horaDespertar').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') calcularDormir();
+        });
+
+        // Registrar Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
 </body>
 
 </html>
