@@ -40,6 +40,15 @@
                                     font-size: 28px;
                         }
 
+                        h2 {
+                                    text-align: center;
+                                    color: #555;
+                                    margin: 30px 0 20px 0;
+                                    font-size: 20px;
+                                    border-top: 2px solid #eee;
+                                    padding-top: 20px;
+                        }
+
                         .form-group {
                                     margin-bottom: 20px;
                         }
@@ -78,6 +87,7 @@
                                     font-weight: bold;
                                     cursor: pointer;
                                     transition: transform 0.2s;
+                                    margin-bottom: 10px;
                         }
 
                         button:active {
@@ -85,11 +95,11 @@
                         }
 
                         .result {
-                                    margin-top: 25px;
-                                    padding: 20px;
+                                    margin-top: 15px;
+                                    padding: 15px;
                                     border-radius: 8px;
                                     text-align: center;
-                                    font-size: 18px;
+                                    font-size: 16px;
                                     font-weight: bold;
                                     display: none;
                         }
@@ -128,32 +138,51 @@
             <div class="container">
                         <h1>Calculador de Sueño</h1>
 
-                        <div class="form-group">
-                                    <label for="dormir">¿Ya te acostas? (sí/no):</label>
-                                    <select id="dormir">
-                                                <option value="">Selecciona...</option>
-                                                <option value="si">Sí</option>
-                                                <option value="no">No</option>
-                                    </select>
+                        <!-- SECCIÓN 1: ¿A qué hora duermo? -->
+                        <div>
+                                    <h2>¿A qué hora te acuestas?</h2>
+
+                                    <div class="form-group">
+                                                <label for="dormir">¿Ya te acostas? (sí/no):</label>
+                                                <select id="dormir">
+                                                            <option value="">Selecciona...</option>
+                                                            <option value="si">Sí</option>
+                                                            <option value="no">No</option>
+                                                </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                                <label for="hora">¿Qué hora es? (0-23):</label>
+                                                <input type="number" id="hora" min="0" max="23" placeholder="Ej: 23">
+                                    </div>
+
+                                    <button onclick="calcularDespertar()">Calcular hora de despertar</button>
+                                    <div id="resultado1" class="result"></div>
                         </div>
 
-                        <div class="form-group">
-                                    <label for="hora">¿Qué hora es? (0-23):</label>
-                                    <input type="number" id="hora" min="0" max="23" placeholder="Ej: 23">
+                        <!-- SECCIÓN 2: ¿A qué hora me despierto? -->
+                        <div>
+                                    <h2>¿A qué hora te queres despertar?</h2>
+
+                                    <div class="form-group">
+                                                <label for="horaDespertar">¿A qué hora te queres despertar?
+                                                            (0-23):</label>
+                                                <input type="number" id="horaDespertar" min="0" max="23"
+                                                            placeholder="Ej: 7">
+                                    </div>
+
+                                    <button onclick="calcularDormir()">Calcular hora para dormir</button>
+                                    <div id="resultado2" class="result"></div>
                         </div>
-
-                        <button onclick="calcular()">Calcular</button>
-
-                        <div id="resultado" class="result"></div>
             </div>
 
             <script>
-                        function calcular() {
+                        // Calcular hora de despertar
+                        function calcularDespertar() {
                                     const dormir = document.getElementById('dormir').value.toLowerCase();
                                     const hora = document.getElementById('hora').value;
-                                    const resultado = document.getElementById('resultado');
+                                    const resultado = document.getElementById('resultado1');
 
-                                    // Limpiar resultado anterior
                                     resultado.className = 'result';
 
                                     if (dormir === 'si') {
@@ -168,7 +197,6 @@
 
                                                             let hr_despertar = hr_dormir + 8;
 
-                                                            // Si pasa de 24, restar 24
                                                             if (hr_despertar > 23) {
                                                                         hr_despertar = hr_despertar - 24;
                                                             }
@@ -188,15 +216,45 @@
                                     }
                         }
 
+                        // Calcular hora de dormir (NUEVO)
+                        function calcularDormir() {
+                                    const horaDespertar = document.getElementById('horaDespertar').value;
+                                    const resultado = document.getElementById('resultado2');
+
+                                    resultado.className = 'result';
+
+                                    try {
+                                                const hr_despertar = parseInt(horaDespertar);
+
+                                                if (isNaN(hr_despertar) || hr_despertar < 0 || hr_despertar > 23) {
+                                                            resultado.textContent = 'Ingresa una hora válida (0-23)';
+                                                            resultado.className = 'result error';
+                                                            return;
+                                                }
+
+                                                let hr_dormir = hr_despertar - 8;
+
+                                                // Si queda negativo, sumar 24
+                                                if (hr_dormir < 0) {
+                                                            hr_dormir = hr_dormir + 24;
+                                                }
+
+                                                resultado.textContent = `Deberías dormir a las ${hr_dormir}:00`;
+                                                resultado.className = 'result success';
+                                    } catch (error) {
+                                                resultado.textContent = 'Error al procesar';
+                                                resultado.className = 'result error';
+                                    }
+                        }
+
                         // Permitir calcular con Enter
                         document.getElementById('hora').addEventListener('keypress', function (e) {
-                                    if (e.key === 'Enter') calcular();
+                                    if (e.key === 'Enter') calcularDespertar();
                         });
 
-                        // Registrar Service Worker para PWA
-                        if ('serviceWorker' in navigator) {
-                                    navigator.serviceWorker.register('sw.js');
-                        }
+                        document.getElementById('horaDespertar').addEventListener('keypress', function (e) {
+                                    if (e.key === 'Enter') calcularDormir();
+                        });
             </script>
 </body>
 
