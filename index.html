@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Calculador de Sueño</title>
+            <link rel="manifest" href="manifest.json">
+            <meta name="theme-color" content="#2196F3">
+            <style>
+                        * {
+                                    margin: 0;
+                                    padding: 0;
+                                    box-sizing: border-box;
+                        }
+
+                        body {
+                                    font-family: Arial, sans-serif;
+                                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                    min-height: 100vh;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    padding: 20px;
+                        }
+
+                        .container {
+                                    background: white;
+                                    border-radius: 15px;
+                                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                                    padding: 30px;
+                                    width: 100%;
+                                    max-width: 400px;
+                        }
+
+                        h1 {
+                                    text-align: center;
+                                    color: #333;
+                                    margin-bottom: 30px;
+                                    font-size: 28px;
+                        }
+
+                        .form-group {
+                                    margin-bottom: 20px;
+                        }
+
+                        label {
+                                    display: block;
+                                    margin-bottom: 8px;
+                                    color: #555;
+                                    font-weight: bold;
+                        }
+
+                        input,
+                        select {
+                                    width: 100%;
+                                    padding: 12px;
+                                    border: 2px solid #ddd;
+                                    border-radius: 8px;
+                                    font-size: 16px;
+                                    transition: border-color 0.3s;
+                        }
+
+                        input:focus,
+                        select:focus {
+                                    outline: none;
+                                    border-color: #667eea;
+                        }
+
+                        button {
+                                    width: 100%;
+                                    padding: 14px;
+                                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                    color: white;
+                                    border: none;
+                                    border-radius: 8px;
+                                    font-size: 16px;
+                                    font-weight: bold;
+                                    cursor: pointer;
+                                    transition: transform 0.2s;
+                        }
+
+                        button:active {
+                                    transform: scale(0.98);
+                        }
+
+                        .result {
+                                    margin-top: 25px;
+                                    padding: 20px;
+                                    border-radius: 8px;
+                                    text-align: center;
+                                    font-size: 18px;
+                                    font-weight: bold;
+                                    display: none;
+                        }
+
+                        .result.success {
+                                    background: #e8f5e9;
+                                    color: #2e7d32;
+                                    display: block;
+                        }
+
+                        .result.error {
+                                    background: #ffebee;
+                                    color: #c62828;
+                                    display: block;
+                        }
+
+                        .result.warning {
+                                    background: #fff3e0;
+                                    color: #e65100;
+                                    display: block;
+                        }
+
+                        @media (max-width: 480px) {
+                                    .container {
+                                                padding: 20px;
+                                    }
+
+                                    h1 {
+                                                font-size: 24px;
+                                    }
+                        }
+            </style>
+</head>
+
+<body>
+            <div class="container">
+                        <h1>Calculador de Sueño</h1>
+
+                        <div class="form-group">
+                                    <label for="dormir">¿Ya te acostas? (sí/no):</label>
+                                    <select id="dormir">
+                                                <option value="">Selecciona...</option>
+                                                <option value="si">Sí</option>
+                                                <option value="no">No</option>
+                                    </select>
+                        </div>
+
+                        <div class="form-group">
+                                    <label for="hora">¿Qué hora es? (0-23):</label>
+                                    <input type="number" id="hora" min="0" max="23" placeholder="Ej: 23">
+                        </div>
+
+                        <button onclick="calcular()">Calcular</button>
+
+                        <div id="resultado" class="result"></div>
+            </div>
+
+            <script>
+                        function calcular() {
+                                    const dormir = document.getElementById('dormir').value.toLowerCase();
+                                    const hora = document.getElementById('hora').value;
+                                    const resultado = document.getElementById('resultado');
+
+                                    // Limpiar resultado anterior
+                                    resultado.className = 'result';
+
+                                    if (dormir === 'si') {
+                                                try {
+                                                            const hr_dormir = parseInt(hora);
+
+                                                            if (isNaN(hr_dormir) || hr_dormir < 0 || hr_dormir > 23) {
+                                                                        resultado.textContent = 'Ingresa una hora válida (0-23)';
+                                                                        resultado.className = 'result error';
+                                                                        return;
+                                                            }
+
+                                                            let hr_despertar = hr_dormir + 8;
+
+                                                            // Si pasa de 24, restar 24
+                                                            if (hr_despertar > 23) {
+                                                                        hr_despertar = hr_despertar - 24;
+                                                            }
+
+                                                            resultado.textContent = `Te tenés que despertar a las ${hr_despertar}:00`;
+                                                            resultado.className = 'result success';
+                                                } catch (error) {
+                                                            resultado.textContent = 'Error al procesar';
+                                                            resultado.className = 'result error';
+                                                }
+                                    } else if (dormir === 'no') {
+                                                resultado.textContent = '¿Y entonces para qué abrís la app?';
+                                                resultado.className = 'result warning';
+                                    } else {
+                                                resultado.textContent = 'Selecciona una opción';
+                                                resultado.className = 'result error';
+                                    }
+                        }
+
+                        // Permitir calcular con Enter
+                        document.getElementById('hora').addEventListener('keypress', function (e) {
+                                    if (e.key === 'Enter') calcular();
+                        });
+
+                        // Registrar Service Worker para PWA
+                        if ('serviceWorker' in navigator) {
+                                    navigator.serviceWorker.register('sw.js');
+                        }
+            </script>
+</body>
+
+</html>
